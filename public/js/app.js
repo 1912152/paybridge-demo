@@ -400,7 +400,7 @@ function openResubmitModal(id,type){
     +'<div class="upload-zone" id="resub-zone" onclick="document.getElementById(\'resub-file\').click()" style="margin-bottom:12px"><div class="upload-icon">&#128202;</div><div class="upload-text">Click to select corrected Excel file</div></div>'
     +'<input type="file" id="resub-file" accept=".xlsx,.xls" style="display:none" onchange="onResubFileSelected(event,\''+type+'\')">'
     +'<div id="resub-msg"></div>'
-    +'<div style="display:flex;gap:10px;margin-top:8px"><button class="btn btn-primary" id="resub-btn" onclick="doResubmit(\'\'+type+\'\')" disabled>Submit to Checker</button><button class="btn" onclick="closeModal()">Cancel</button></div>');
+    +'<div style="display:flex;gap:10px;margin-top:8px"><button class="btn btn-primary" id="resub-btn" onclick="doResubmit(\''+type+'\')" disabled>Submit to Checker</button><button class="btn" onclick="closeModal()">Cancel</button></div>');
 }
 function onResubFileSelected(event,type){
   var file=event.target.files[0]; if(!file) return;
@@ -453,7 +453,7 @@ function onFileSelected(event,type){
   zone.innerHTML='<div class="upload-icon">&#9989;</div><div class="upload-text" style="color:var(--accent)">'+esc(file.name)+'</div><div class="upload-sub">'+(file.size/1024).toFixed(1)+' KB</div>';
   document.getElementById('upload-preview').style.display='block';
   document.getElementById('upload-preview').innerHTML='<div class="alert alert-success"><span class="alert-icon">&#9989;</span><div>File ready: <strong>'+esc(file.name)+'</strong>.</div></div>'
-    +'<div style="display:flex;gap:10px;margin-top:10px"><button class="btn btn-primary" id="submit-btn" onclick="submitBatch(\'\'+type+\'\')">Validate &amp; Submit to Checker</button><button class="btn" onclick="loadPage(\'&quot;+(type===&quot;AS&quot;?&quot;new_as&quot;:&quot;new_ewa&quot;)+&quot;\')">Cancel</button></div>';
+    +'<div style="display:flex;gap:10px;margin-top:10px"><button class="btn btn-primary" id="submit-btn" onclick="submitBatch(\''+type+'\')">Validate &amp; Submit to Checker</button><button class="btn" onclick="loadPage(\''+(type==='AS'?'new_as':'new_ewa')+'\')">Cancel</button></div>';
   document.getElementById('upload-error').style.display='none';
 }
 async function submitBatch(type){
@@ -470,7 +470,7 @@ async function submitBatch(type){
     var data=await res.json();
     if(data.success){
       document.getElementById('upload-preview').innerHTML='<div class="alert alert-success"><span class="alert-icon">&#127881;</span><div><strong>Batch '+esc(data.batch.id)+' submitted!</strong><br>'+data.batch.employees+' employees &nbsp;|&nbsp; '+fmt(data.batch.amount)+' &nbsp;|&nbsp; Charge: '+fmt(data.batch.charge)+'</div></div>'
-        +'<div style="margin-top:12px;display:flex;gap:10px"><button class="btn btn-primary" onclick="loadPage(\'my_batches\')">View My Batches</button><button class="btn" onclick="loadPage(\'&quot;+(type===&quot;AS&quot;?&quot;new_as&quot;:&quot;new_ewa&quot;)+&quot;\')">Upload Another</button></div>';
+        +'<div style="margin-top:12px;display:flex;gap:10px"><button class="btn btn-primary" onclick="loadPage(\'my_batches\')">View My Batches</button><button class="btn" onclick="loadPage(\''+(type==='AS'?'new_as':'new_ewa')+'\')">Upload Another</button></div>';
     }else{
       var msgs=data.errors?data.errors.join('<br>'):(data.error||'Upload failed');
       errEl.style.display='block'; errEl.innerHTML='<div class="alert alert-danger"><span class="alert-icon">&#9888;&#65039;</span><div>'+msgs+'</div></div>';
