@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3000/api/batches -b /tmp/maker.jar)",
+      "Bash(curl -s -X POST http://localhost:3000/api/login -H \"Content-Type: application/json\" -d \"{\\\\\"email\\\\\":\\\\\"banker@bank.com\\\\\",\\\\\"password\\\\\":\\\\\"banker123\\\\\"}\" -c /tmp/banker.jar)",
+      "Bash(curl -s http://localhost:3000/api/corp-requests -b /tmp/banker.jar)",
+      "Bash(pkill -f \"node server.js\")",
+      "Bash(node \"C:\\\\paybridge-demo\\\\paybridge\\\\server.js\")",
+      "Bash(curl -s http://localhost:3000/ -o nul -w \"%{http_code}\")",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
